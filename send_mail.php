@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $guests = htmlspecialchars($_POST['guests']);
     $comments = htmlspecialchars($_POST['comments']);
 
-    $to = "your-email@example.com"; // Remplacez par votre adresse e-mail
+    $to = "julien.castro@protonmail.com"; // Remplacez par votre adresse e-mail
     $subject = "Nouvelle réservation de " . $name;
     $message = "
     Nom complet: $name\n
