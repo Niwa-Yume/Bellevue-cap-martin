@@ -9,15 +9,10 @@
   <style>
     :root {
       --primary: #E34234;
-      /* Terracotta */
       --secondary: #F5DEB3;
-      /* Wheat */
       --accent: #8B4513;
-      /* Saddle Brown */
       --background: #FFFAF0;
-      /* Floral White */
       --text: #4A4A4A;
-      /* Dark Gray */
     }
 
     body,
@@ -370,7 +365,7 @@
         <li>Vue panoramique sur la Méditerranée</li>
         <li>Piscine</li>
         <li>2 chambres luxueuses</li>
-        <li>>Machine à Café</li>
+        <li>Machine à Café</li>
         <li>Climatisée</li>
         <li>Jardin méditerranéen</li>
         <li>Accès rapide à la mer</li>
@@ -462,13 +457,13 @@
 
     <section id="reservation" class="reservation">
       <h2>Réservez Votre Séjour</h2>
-      <form id="reservationForm">
-        <input type="text" placeholder="Nom complet" required>
-        <input type="email" placeholder="Email" required>
-        <input type="tel" placeholder="Téléphone" required>
-        <input type="date" placeholder="Date d'arrivée" required>
-        <input type="date" placeholder="Date de départ" required>
-        <select required>
+      <form id="reservationForm" action="send_mail.php" method="POST">
+        <input type="text" name="name" placeholder="Nom complet" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="tel" name="phone" placeholder="Téléphone" required>
+        <input type="date" name="arrival" placeholder="Date d'arrivée" required>
+        <input type="date" name="departure" placeholder="Date de départ" required>
+        <select name="guests" required>
           <option value="">Nombre de personnes</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -476,7 +471,7 @@
           <option value="4">4</option>
           <option value="5">5+</option>
         </select>
-        <textarea placeholder="Demandes spéciales ou commentaires"></textarea>
+        <textarea name="comments" placeholder="Demandes spéciales ou commentaires"></textarea>
         <button type="submit">Réserver</button>
       </form>
     </section>
@@ -507,7 +502,14 @@
       reservationForm.addEventListener('submit', (e) => {
         e.preventDefault();
         // Here you would typically send the form data to a server
-        alert('Merci pour votre réservation ! Nous vous contacterons bientôt pour confirmer les détails.');
+        fetch('send_mail.php', {
+          method: 'POST',
+          body: new FormData(reservationForm)
+        }).then(response => response.text()).then(data => {
+          alert(data);
+        }).catch(error => {
+          alert('Une erreur s\'est produite lors de l\'envoi de votre réservation. Veuillez réessayer.');
+        });
       });
 
       // Smooth scroll
